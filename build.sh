@@ -1,5 +1,5 @@
-pip install -r back-end/requirements.txt
+pip install -r requirements.txt
 cd front-end
 npm install
 npm run build
-cp -r build ../back-end/flask_project/
+cp -r build ../flask_project/
