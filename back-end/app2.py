@@ -3,9 +3,8 @@ from flask_cors import CORS
 import logging
 import os
 from haystack.document_stores import ElasticsearchDocumentStore
-from haystack.nodes import ElasticsearchRetriever
+from haystack.nodes import BM25Retriever  # Use BM25Retriever as ElasticsearchRetriever might be deprecated or moved
 from haystack.schema import Document
-import requests
 import cohere
 
 # Set the correct path to the React build folder
@@ -16,7 +15,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Initialize Haystack components
 document_store = ElasticsearchDocumentStore(host="localhost", username="", password="", index="document")
-retriever = ElasticsearchRetriever(document_store=document_store)
+retriever = BM25Retriever(document_store=document_store)  # Update based on the latest retriever available
 
 # Load documents from a local directory
 def load_documents_from_directory(directory_path):
@@ -32,7 +31,7 @@ def load_documents_from_directory(directory_path):
 documents = load_documents_from_directory("RAGData")
 document_store.write_documents(documents)
 
-cohere_client = cohere.ClientV2("NKZD0sANta3S02GP5wCUYrPev7dRHW5WDbJFdbJ2")
+cohere_client = cohere.Client("NKZD0sANta3S02GP5wCUYrPev7dRHW5WDbJFdbJ2")  # Ensure usage of the correct Client
 
 # Serve React's index.html for the root route
 @app.route('/')
@@ -68,7 +67,7 @@ def analyze_code():
             messages=[{"role": "user", "content": prompt}]
         )
 
-        generated_text = response.message.content[0].text.strip()
+        generated_text = response.message.content.strip()  # Ensure correct extraction of generated text
         logging.debug(f"Model response: {generated_text}")
 
         return jsonify({"response": generated_text}), 200
