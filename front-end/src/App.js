@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import CodeEditor from './components/CodeEditor';
+import FeedbackPanel from './components/FeedbackPanel';
 import './App.css';
 
 function App() {
+  const [feedback, setFeedback] = useState(null);
 
   const handleSubmitCode = (feedbackData) => {
     setFeedback(feedbackData); 
