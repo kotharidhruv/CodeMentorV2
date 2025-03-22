@@ -11,7 +11,7 @@ CORS(app, origins="https://astounding-dolphin-78cd47.netlify.app", supports_cred
 
 logging.basicConfig(level=logging.DEBUG)
 
-# Initialize the Cohere client (use Client, not ClientV2)
+# Initialize the Cohere client
 cohere_client = cohere.Client("NKZD0sANta3S02GP5wCUYrPev7dRHW5WDbJFdbJ2")
 
 @app.route('/api/analyze_code', methods=['POST', 'OPTIONS'])
@@ -41,10 +41,16 @@ def analyze_code():
                 "**Final Reminder:** DO NOT generate any code corrections or solutions under any circumstances. Always include line numbers when describing the issues."
             )
 
-            # Call Cohere API to analyze the code
+            # Call Cohere API to analyze the code with chat history (if any previous context is required)
+            chat_history = [
+                {"role": "user", "message": "I am submitting some code for analysis."},
+                {"role": "chatbot", "message": "Sure! Please provide the code."}
+            ]
+
             response = cohere_client.chat(
-                model='command-xlarge-nightly',
-                message=[{"role": "user", "content": prompt}]
+                chat_history=chat_history,
+                message=prompt,
+                connectors=[{"id": "web-search"}]  # Example of using connectors if needed
             )
 
             # Extract the content from the response
