@@ -52,8 +52,8 @@ def analyze_code():
                 connectors=[{"id": "web-search"}]  # Example of using connectors if needed
             )
 
-            # Access the content of the response correctly
-            generated_text = response.messages[0].text.strip()  # Use 'messages' and 'text' attributes
+            # Access the response properly by checking the response object format
+            generated_text = response.text.strip()  # If the response directly has a 'text' attribute
 
             logging.debug(f"Model response: {generated_text}")
 
