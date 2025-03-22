@@ -7,6 +7,7 @@ import cohere
 
 app = Flask(__name__)
 
+# CORS configuration
 CORS(app, origins="https://astounding-dolphin-78cd47.netlify.app", supports_credentials=True)
 
 logging.basicConfig(level=logging.DEBUG)
@@ -16,7 +17,13 @@ cohere_client = cohere.ClientV2("NKZD0sANta3S02GP5wCUYrPev7dRHW5WDbJFdbJ2")
 @app.route('/api/analyze_code', methods=['POST', 'OPTIONS'])
 def analyze_code():
     if request.method == 'OPTIONS':
-        return '', 200
+        # Handle preflight request
+        response = jsonify({})
+        response.headers.add('Access-Control-Allow-Origin', 'https://astounding-dolphin-78cd47.netlify.app')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+        response.headers.add('Access-Control-Allow-Methods', 'POST')
+        response.headers.add('Access-Control-Allow-Credentials', 'true')
+        return response
     
     if request.method == 'POST':
         try:
@@ -48,11 +55,18 @@ def analyze_code():
             generated_text = response.message.content[0].text.strip()
             logging.debug(f"Model response: {generated_text}")
 
-            return jsonify({"response": generated_text}), 200
+            # Add CORS headers to the response
+            res = jsonify({"response": generated_text})
+            res.headers.add('Access-Control-Allow-Origin', 'https://astounding-dolphin-78cd47.netlify.app')
+            res.headers.add('Access-Control-Allow-Credentials', 'true')
+            return res, 200
 
         except Exception as e:
             logging.error(f"Error during code analysis: {str(e)}")
-            return jsonify({"error": str(e)}), 500
+            res = jsonify({"error": str(e)})
+            res.headers.add('Access-Control-Allow-Origin', 'https://astounding-dolphin-78cd47.netlify.app')
+            res.headers.add('Access-Control-Allow-Credentials', 'true')
+            return res, 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
