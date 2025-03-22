@@ -21,11 +21,15 @@ npm install
 echo "Building frontend..."
 CI=false npm run build
 
-# Step 5: Copy the frontend build to backend (adjust path if needed)
-echo "Copying built frontend files to backend..."
-cp -r build ../flask_project/build/static/
+# Step 5: Create the necessary directories in the backend (if they don't exist)
+echo "Creating necessary directories in the backend..."
+mkdir -p ../flask_project/build/static
 
-# Step 6: Return to root directory (if necessary)
+# Step 6: Copy the frontend build to backend
+echo "Copying built frontend files to backend..."
+cp -r build/* ../flask_project/build/
+
+# Step 7: Return to root directory (if necessary)
 cd ..
 
 echo "Build process completed successfully!"
