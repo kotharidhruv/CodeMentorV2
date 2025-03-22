@@ -1,5 +1,31 @@
+#!/bin/bash
+
+# Exit the script if any command fails
+set -e
+
+echo "Starting build process..."
+
+# Step 1: Install backend dependencies
+echo "Installing backend dependencies..."
 pip install -r requirements.txt
+
+# Step 2: Navigate to the frontend directory
+echo "Navigating to frontend directory..."
 cd front-end
+
+# Step 3: Install frontend dependencies (from package.json)
+echo "Installing frontend dependencies..."
 npm install
+
+# Step 4: Build the frontend
+echo "Building frontend..."
 npm run build
-cp -r build ../flask_project/
+
+# Step 5: Copy the frontend build to backend (adjust path if needed)
+echo "Copying built frontend files to backend..."
+cp -r build ../flask_project/build/static/
+
+# Step 6: Return to root directory (if necessary)
+cd ..
+
+echo "Build process completed successfully!"
