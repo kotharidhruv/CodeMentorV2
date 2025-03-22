@@ -3,7 +3,7 @@ services:
     name: codementor-backend
     env: python
     plan: free
-    buildCommand: ""
+    buildCommand: "cd front-end && npm install && npm run build"
     startCommand: "python back-end/app2.py"
     envVars:
       - key: COHERE_API_KEY
