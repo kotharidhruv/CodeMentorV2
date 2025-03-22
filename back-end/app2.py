@@ -5,7 +5,6 @@ import os
 from haystack.document_stores import ElasticsearchDocumentStore
 from haystack.nodes import ElasticsearchRetriever
 from haystack.schema import Document
-import requests
 import cohere
 
 # Set the correct path to the React build folder
@@ -32,6 +31,7 @@ def load_documents_from_directory(directory_path):
 documents = load_documents_from_directory("RAGData")
 document_store.write_documents(documents)
 
+# Instantiate Cohere client
 cohere_client = cohere.ClientV2("NKZD0sANta3S02GP5wCUYrPev7dRHW5WDbJFdbJ2")
 
 # Serve React's index.html for the root route
