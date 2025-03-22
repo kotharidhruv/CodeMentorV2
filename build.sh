@@ -19,7 +19,7 @@ npm install
 
 # Step 4: Build the frontend
 echo "Building frontend..."
-npm run build
+CI=false npm run build
 
 # Step 5: Copy the frontend build to backend (adjust path if needed)
 echo "Copying built frontend files to backend..."
