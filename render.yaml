@@ -8,9 +8,16 @@ services:
     envVars:
       - key: COHERE_API_KEY
         value: "NKZD0sANta3S02GP5wCUYrPev7dRHW5WDbJFdbJ2"
+
   - type: elasticsearch
     name: elasticsearch
     plan: free
     envVars:
       - key: ES_JAVA_OPTS
         value: "-Xms512m -Xmx512m"
+
+  - type: web
+    name: frontend
+    env: static
+    buildCommand: npm run build --prefix front-end
+    publishPath: front-end/build
