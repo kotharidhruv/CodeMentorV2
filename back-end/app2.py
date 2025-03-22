@@ -2,8 +2,8 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import logging
 import os
-from haystack.document_stores import InMemoryDocumentStore
-from haystack.nodes import BM25Retriever
+from haystack.document_stores import ElasticsearchDocumentStore
+from haystack.nodes import ElasticsearchRetriever
 from haystack.schema import Document
 import requests
 import cohere
@@ -15,8 +15,8 @@ CORS(app, origins="*")
 logging.basicConfig(level=logging.DEBUG)
 
 # Initialize Haystack components
-document_store = InMemoryDocumentStore(use_gpu=False, use_bm25=True)
-retriever = BM25Retriever(document_store=document_store)
+document_store = ElasticsearchDocumentStore(host="localhost", username="", password="", index="document")
+retriever = ElasticsearchRetriever(document_store=document_store)
 
 # Load documents from a local directory
 def load_documents_from_directory(directory_path):
