@@ -11,7 +11,7 @@ CORS(app, origins="https://astounding-dolphin-78cd47.netlify.app", supports_cred
 
 logging.basicConfig(level=logging.DEBUG)
 
-cohere_client = cohere.Client("NKZD0sANta3S02GP5wCUYrPev7dRHW5WDbJFdbJ2")
+cohere_client = cohere.ClientV2("NKZD0sANta3S02GP5wCUYrPev7dRHW5WDbJFdbJ2")
 
 @app.route('/api/analyze_code', methods=['POST', 'OPTIONS'])
 def analyze_code():
@@ -42,7 +42,7 @@ def analyze_code():
 
             response = cohere_client.chat(
                 model='command-xlarge-nightly',
-                message=prompt
+                message=[{"role": "user", "content": prompt}]
             )
 
             generated_text = response.message.content[0].text.strip()
