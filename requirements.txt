@@ -2,7 +2,5 @@ Flask==3.0.0
 flask-cors==4.0.0
 requests==2.31.0
 cohere==4.40
-farm-haystack[docstores]==1.20.1
-
-# new change
-faiss-cpu==1.7.2
+farm-haystack[elasticsearch]==1.20.1
+elasticsearch==7.16.1
