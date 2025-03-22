@@ -29,7 +29,8 @@ mkdir -p ../flask_project/build/static
 echo "Copying built frontend files to backend..."
 cp -r build/* ../flask_project/build/
 
-# Step 7: Return to root directory (if necessary)
+# Step 7: Return to root directory
+echo "Returning to root directory..."
 cd ..
 
 echo "Build process completed successfully!"
