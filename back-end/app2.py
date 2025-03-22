@@ -38,7 +38,7 @@ def analyze_code():
 
         response = cohere_client.chat(
             model='command-xlarge-nightly',
-            messages=[{"role": "user", "content": prompt}]
+            message=prompt
         )
 
         generated_text = response.message.content[0].text.strip()
