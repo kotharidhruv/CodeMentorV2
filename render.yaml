@@ -5,8 +5,12 @@ services:
     plan: free
     buildCommand: "./build.sh"
     startCommand: "python back-end/app2.py"
-    setupCommands:
-      - apt-get update && apt-get install -y build-essential libopenblas-dev swig
     envVars:
       - key: COHERE_API_KEY
         value: "NKZD0sANta3S02GP5wCUYrPev7dRHW5WDbJFdbJ2"
+  - type: elasticsearch
+    name: elasticsearch
+    plan: free
+    envVars:
+      - key: ES_JAVA_OPTS
+        value: "-Xms512m -Xmx512m"
