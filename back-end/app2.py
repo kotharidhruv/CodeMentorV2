@@ -11,7 +11,7 @@ CORS(app, origins="*")
 logging.basicConfig(level=logging.DEBUG)
 
 
-cohere_client = cohere.ClientV2("NKZD0sANta3S02GP5wCUYrPev7dRHW5WDbJFdbJ2")
+cohere_client = cohere.Client("NKZD0sANta3S02GP5wCUYrPev7dRHW5WDbJFdbJ2")
 
 @app.route('/api/analyze_code', methods=['POST'])
 def analyze_code():
