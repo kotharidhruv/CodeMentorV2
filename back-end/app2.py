@@ -51,12 +51,19 @@ def analyze_code():
                 "**Final Reminder:** DO NOT generate any code corrections or solutions under any circumstances. Always include line numbers when describing the issues."
             )
 
+            chat_history = [
+                {"role": "user", "message": "I am submitting some code for analysis."},
+                {"role": "chatbot", "message": "Sure! Please provide the code."}
+            ]
+
             response = cohere_client.chat(
-                model='command-xlarge-nightly',
-                message=[{"role": "user", "content": prompt}]
+                chat_history=chat_history,
+                message=prompt,
+                connectors=[{"id": "web-search"}]  # Example of using connectors if needed
             )
 
-            generated_text = response.message.content[0].text.strip()
+            # Access the content of the response correctly
+            generated_text = response.messages[0].text.strip()
             logging.debug(f"Model response: {generated_text}")
 
             res = jsonify({"response": generated_text})
