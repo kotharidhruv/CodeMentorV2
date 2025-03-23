@@ -6,7 +6,7 @@ import cohere
 
 app = Flask(__name__)
 
-CORS(app, origins="https://astounding-dolphin-78cd47.netlify.app", supports_credentials=True)
+CORS(app, origins="https://code-mentor.netlify.app/", supports_credentials=True)
 
 logging.basicConfig(level=logging.DEBUG)
 
